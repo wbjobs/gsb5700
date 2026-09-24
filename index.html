@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>文本朗读器</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="unsupported" class="unsupported hidden">
+  <h2>⚠️ 浏览器不支持语音合成</h2>
+  <p>当前浏览器不支持 SpeechSynthesis API，请使用最新版 Chrome / Edge / Safari / Firefox 打开。</p>
+</div>
+
+<main id="app" class="container hidden">
+  <header>
+    <h1>📖 文本朗读器</h1>
+    <p class="subtitle">支持中英文混合 · 超长文本分片 · 段落高亮</p>
+  </header>
+
+  <section class="input-section">
+    <div class="input-toolbar">
+      <span id="charCount">0 字符</span>
+      <div>
+        <button id="btnSample" type="button">示例文本</button>
+        <button id="btnClear" type="button">清空</button>
+      </div>
+    </div>
+    <textarea id="textInput" placeholder="在此输入或粘贴要朗读的文本（支持中英文混合、超长文本）…" spellcheck="false"></textarea>
+  </section>
+
+  <section class="controls">
+    <div class="control-row transport">
+      <button id="btnPlay" class="primary" type="button">▶ 朗读</button>
+      <button id="btnPause" type="button" disabled>⏸ 暂停</button>
+      <button id="btnStop" type="button" disabled>⏹ 停止</button>
+      <span id="status" class="status">就绪</span>
+    </div>
+
+    <div class="control-row">
+      <label for="voiceSelect">语音</label>
+      <select id="voiceSelect"></select>
+      <label class="checkbox"><input type="checkbox" id="autoLang"> 按段落自动选择中/英文语音</label>
+    </div>
+
+    <div class="control-row sliders">
+      <div class="slider-group">
+        <label for="rate">语速 <output id="rateVal">1.0</output></label>
+        <input type="range" id="rate" min="0.5" max="2" step="0.1" value="1">
+      </div>
+      <div class="slider-group">
+        <label for="pitch">音调 <output id="pitchVal">1.0</output></label>
+        <input type="range" id="pitch" min="0.5" max="2" step="0.1" value="1">
+      </div>
+      <div class="slider-group">
+        <label for="volume">音量 <output id="volumeVal">1.0</output></label>
+        <input type="range" id="volume" min="0" max="1" step="0.1" value="1">
+      </div>
+    </div>
+
+    <div class="control-row progress-row">
+      <progress id="progress" value="0" max="100"></progress>
+      <span id="progressText">0 / 0 段</span>
+    </div>
+  </section>
+
+  <section id="readerSection" class="reader-section hidden">
+    <h2>朗读视图 <span class="hint">（点击段落可从该段开始朗读）</span></h2>
+    <div id="reader" class="reader"></div>
+  </section>
+
+  <section class="history-section">
+    <h2>最近朗读记录</h2>
+    <ul id="historyList" class="history-list"></ul>
+  </section>
+</main>
+
+<script src="js/db.js"></script>
+<script src="js/tts.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
