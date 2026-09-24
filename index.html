@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文本朗读器</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="app-header">
+    <h1>文本朗读器</h1>
+    <p class="subtitle">基于浏览器 SpeechSynthesis · 支持中英文混合 · 超长文本分片</p>
+  </header>
+
+  <div id="unsupported-banner" class="banner banner-error hidden">
+    当前浏览器不支持 SpeechSynthesis API，无法使用朗读功能。请使用最新版 Chrome / Edge / Safari / Firefox。
+  </div>
+
+  <main class="layout">
+    <section class="panel editor-panel">
+      <div class="panel-title">
+        <span>文本输入</span>
+        <span id="char-count" class="muted">0 字</span>
+      </div>
+      <textarea id="text-input" placeholder="在此输入或粘贴要朗读的文本，支持中英文混合与超长文本（约 10 万字）……" spellcheck="false"></textarea>
+      <div class="editor-actions">
+        <button id="btn-sample" type="button" class="btn btn-ghost">填入示例</button>
+        <button id="btn-clear" type="button" class="btn btn-ghost">清空</button>
+      </div>
+
+      <div class="panel-title">
+        <span>段落预览</span>
+        <span id="para-count" class="muted">0 段</span>
+      </div>
+      <div id="paragraph-view" class="paragraph-view">
+        <p class="muted placeholder">输入文本后，这里会按段落显示，朗读时高亮当前段落。</p>
+      </div>
+    </section>
+
+    <aside class="panel control-panel">
+      <div class="panel-title"><span>朗读控制</span></div>
+
+      <div class="transport">
+        <button id="btn-play" type="button" class="btn btn-primary">▶ 朗读</button>
+        <button id="btn-pause" type="button" class="btn" disabled>⏸ 暂停</button>
+        <button id="btn-resume" type="button" class="btn" disabled>⏵ 继续</button>
+        <button id="btn-stop" type="button" class="btn btn-danger" disabled>⏹ 停止</button>
+      </div>
+
+      <div id="status-line" class="status-line muted">就绪</div>
+      <div class="progress-track"><div id="progress-bar" class="progress-bar"></div></div>
+
+      <label class="field">
+        <span>语音</span>
+        <select id="voice-select"></select>
+      </label>
+      <div id="voice-loading" class="muted small">正在加载语音列表…</div>
+
+      <label class="field">
+        <span>语速 <output id="rate-value">1.0</output></span>
+        <input id="rate-input" type="range" min="0.5" max="2" step="0.1" value="1">
+      </label>
+      <label class="field">
+        <span>音调 <output id="pitch-value">1.0</output></span>
+        <input id="pitch-input" type="range" min="0" max="2" step="0.1" value="1">
+      </label>
+      <label class="field">
+        <span>音量 <output id="volume-value">1.0</output></span>
+        <input id="volume-input" type="range" min="0" max="1" step="0.05" value="1">
+      </label>
+
+      <div class="panel-title"><span>最近朗读</span></div>
+      <ul id="history-list" class="history-list"></ul>
+    </aside>
+  </main>
+
+  <script src="js/db.js"></script>
+  <script src="js/tts.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
